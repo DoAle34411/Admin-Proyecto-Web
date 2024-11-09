@@ -2,13 +2,13 @@ import { json, redirect } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import { getSession } from "../utils/auth";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 
 export const loader = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
-  if (!session.has("userId")) return redirect("/login");
-  
+    const session = await getSession(request.headers.get("Cookie"));
+    if (!session.has("userId")) return redirect("/login");
   // Fetch books data
-  const response = await fetch(`${process.env.API_URL}/books`);
+  const response = await fetch('https://api-express-web.onrender.com/books');
   const books = await response.json();
   return json({ books });
 };

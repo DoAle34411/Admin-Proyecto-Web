@@ -14,7 +14,7 @@ export const action = async ({ request }) => {
   const bookData = Object.fromEntries(formData);
   
   try {
-    const response = await fetch(`${process.env.API_URL}/books/createBook`, {
+    const response = await fetch('https://api-express-web.onrender.com/books/createBook', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
