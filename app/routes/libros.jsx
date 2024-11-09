@@ -18,9 +18,8 @@ export default function Libros() {
 
   const handleDelete = async (id) => {
     if (!confirm("¿Estás seguro de que quieres eliminar este libro?")) return;
-    
     try {
-      await fetch(`${process.env.API_URL}/books/delete/${id}`, {
+      await fetch(`https://api-express-web.onrender.com/books/delete/${id}`, {
         method: 'DELETE',
       });
       window.location.reload();
@@ -35,12 +34,7 @@ export default function Libros() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Gestión de Libros</h1>
-          <Link
-            to="/bookForm"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-          >
-            Agregar Libro
-          </Link>
+          <Link to="/bookForm" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">Agregar Libro</Link>
         </div>
         
         <div className="overflow-x-auto">
@@ -65,12 +59,7 @@ export default function Libros() {
                   <td className="px-6 py-4 border-b">{book.amountAvailable}</td>
                   <td className="px-6 py-4 border-b text-center">
                     <div className="flex justify-center space-x-2">
-                      <Link
-                        to={`/libros/edit/${book._id}`}
-                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md"
-                      >
-                        Editar
-                      </Link>
+                    <Link to={`/bookFormEdit/${book._id}`}  className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md">Editar</Link>
                       <button
                         onClick={() => handleDelete(book._id)}
                         className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"

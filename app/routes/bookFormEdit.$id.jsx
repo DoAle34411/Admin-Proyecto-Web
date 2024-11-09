@@ -3,19 +3,35 @@ import { Form, useLoaderData } from "@remix-run/react";
 import { getSession } from "../utils/auth";
 import Navbar from "../components/Navbar";
 
-export const loader = async ({ request }) => {
+export const loader = async ({ request, params }) => {
   const session = await getSession(request.headers.get("Cookie"));
   if (!session.has("userId")) return redirect("/login");
+  
+  // Only try to fetch the book if we have an ID parameter
+  if (params.id) {
+    try {
+      const response = await fetch(`https://api-express-web.onrender.com/books/${params.id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch book');
+      }
+      const book = await response.json();
+      return json({ book });
+    } catch (error) {
+      console.error('Error fetching book:', error);
+      return json({ error: 'Failed to load book' }, { status: 500 });
+    }
+  }
+  
   return json({ book: null });
 };
 
-export const action = async ({ request }) => {
+export const action = async ({ request, params }) => {
   const formData = await request.formData();
   const bookData = Object.fromEntries(formData);
   
   try {
-    const response = await fetch(`${process.env.API_URL}/books/createBook`, {
-      method: 'POST',
+    const response = await fetch(`https://api-express-web.onrender.com/books/update/${params.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -23,11 +39,11 @@ export const action = async ({ request }) => {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create book');
+      throw new Error('Failed to update book');
     }
   } catch (error) {
-    console.error('Error creating book:', error);
-    return json({ error: 'Failed to create book' }, { status: 500 });
+    console.error('Error updating book:', error);
+    return json({ error: 'Failed to update book' }, { status: 500 });
   }
   
   return redirect('/libros');
@@ -46,12 +62,13 @@ export default function BookForm() {
         </h1>
         
         <Form method="post" className="max-w-2xl space-y-4">
+          {/* Rest of your form fields remain the same */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Nombre</label>
             <input
               type="text"
               name="name"
-              defaultValue={book?.name}
+              defaultValue={book?.name || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -62,7 +79,7 @@ export default function BookForm() {
             <input
               type="text"
               name="editorial"
-              defaultValue={book?.editorial}
+              defaultValue={book?.editorial || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -73,7 +90,7 @@ export default function BookForm() {
             <input
               type="text"
               name="edition"
-              defaultValue={book?.edition}
+              defaultValue={book?.edition || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -84,7 +101,7 @@ export default function BookForm() {
             <input
               type="text"
               name="author"
-              defaultValue={book?.author}
+              defaultValue={book?.author || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -95,7 +112,7 @@ export default function BookForm() {
             <input
               type="text"
               name="genre"
-              defaultValue={book?.genre}
+              defaultValue={book?.genre || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -106,7 +123,7 @@ export default function BookForm() {
             <input
               type="number"
               name="pages"
-              defaultValue={book?.pages}
+              defaultValue={book?.pages || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -117,7 +134,7 @@ export default function BookForm() {
             <input
               type="number"
               name="amountTotal"
-              defaultValue={book?.amountTotal}
+              defaultValue={book?.amountTotal || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -128,7 +145,7 @@ export default function BookForm() {
             <input
               type="number"
               name="amountAvailable"
-              defaultValue={book?.amountAvailable}
+              defaultValue={book?.amountAvailable || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
@@ -138,7 +155,7 @@ export default function BookForm() {
             <label className="block text-sm font-medium text-gray-700">Sinopsis</label>
             <textarea
               name="synopsis"
-              defaultValue={book?.synopsis}
+              defaultValue={book?.synopsis || ''}
               rows={4}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
@@ -150,7 +167,7 @@ export default function BookForm() {
             <input
               type="text"
               name="status"
-              defaultValue={book?.genre}
+              defaultValue={book?.status || ''}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
