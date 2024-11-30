@@ -57,6 +57,9 @@ export default function Libros() {
     try {
       await fetch(`https://api-express-web.onrender.com/books/delete/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': 'HeSaidSheSaidBu11$!t',
+        },
       });
       window.location.reload();
     } catch (error) {

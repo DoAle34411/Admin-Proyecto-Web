@@ -10,7 +10,10 @@ export const loader = async ({ request }) => {
   
     try {
       // Fetch all users from the existing endpoint
-      const response = await fetch('https://api-express-web.onrender.com/users/admin/allUsers');
+      const response = await fetch('https://api-express-web.onrender.com/users/admin/allUsers',{headers: {
+        'Authorization': 'HeSaidSheSaidBu11$!t',
+        'Content-Type': 'application/json' // If you're sending JSON data
+      },});
       if (!response.ok) {
         throw new Error('Failed to fetch all users');
       }
@@ -38,6 +41,10 @@ export const loader = async ({ request }) => {
       try {
         const response = await fetch(`https://api-express-web.onrender.com/users/admin/clear-multa/${userId}`, {
           method: 'POST',
+          headers: {
+            'Authorization': 'HeSaidSheSaidBu11$!t',
+            'Content-Type': 'application/json' // If you're sending JSON data
+          },
         });
   
         if (!response.ok) {

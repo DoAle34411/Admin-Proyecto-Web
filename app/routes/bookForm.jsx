@@ -46,6 +46,7 @@ export const action = async ({ request }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'HeSaidSheSaidBu11$!t',
       },
       body: JSON.stringify(bookData),
     });

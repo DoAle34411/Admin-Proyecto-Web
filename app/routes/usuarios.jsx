@@ -10,7 +10,10 @@ export const loader = async ({ request }) => {
  
   try {
     // Use the full API URL instead of process.env.API_URL
-    const response = await fetch('https://api-express-web.onrender.com/users/admin/allUsers');
+    const response = await fetch('https://api-express-web.onrender.com/users/admin/allUsers',{headers: {
+      'Authorization': 'HeSaidSheSaidBu11$!t',
+      'Content-Type': 'application/json' // If you're sending JSON data
+    },});
     if (!response.ok) {
       throw new Error('Failed to fetch users');
     }
@@ -35,7 +38,8 @@ export default function Usuarios() {
       const response = await fetch(`https://api-express-web.onrender.com/users/update/${userId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': 'HeSaidSheSaidBu11$!t',
+          'Content-Type': 'application/json' // If you're sending JSON data
         },
         body: JSON.stringify({ isAdmin: newStatus }),
       });

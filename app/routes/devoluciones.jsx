@@ -49,6 +49,9 @@ export default function Rents() {
     try {
       await fetch(`https://api-express-web.onrender.com/rent/rents/${rentId}`, {
         method: 'PUT',
+        headers: {
+            'Authorization': 'HeSaidSheSaidBu11$!t',
+          },
       });
       window.location.reload();
     } catch (error) {
