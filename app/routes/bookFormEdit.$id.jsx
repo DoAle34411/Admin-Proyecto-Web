@@ -172,6 +172,17 @@ export default function BookForm() {
               required
             />
           </div>
+
+          {/* Fix the name to 'imageUrl' to match the backend model */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">URL Portada</label>
+            <input
+              type="text"
+              name="imageUrl" // Change this name to 'imageUrl' to match the backend model
+              defaultValue={book?.imageUrl || ''} // Use 'imageUrl' from the book data
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            />
+          </div>
           
           <div className="flex justify-end space-x-3">
             <button

@@ -29,12 +29,24 @@ export default function Navbar() {
             >
               Usuarios
             </a>
+            <a
+              href="/multas"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md"
+            >
+              Multas
+            </a>
+            <a
+              href="/devoluciones"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md"
+            >
+              Devoluciones
+            </a>
             <form action="/logout" method="post">
               <button
                 type="submit"
                 className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md transition-colors"
               >
-                Logout
+                Cerrar Sesión
               </button>
             </form>
           </div>
@@ -84,12 +96,24 @@ export default function Navbar() {
           >
             Usuarios
           </a>
+          <a
+              href="/multas"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md"
+            >
+              Multas
+            </a>
+            <a
+              href="/devoluciones"
+              className="text-gray-300 hover:text-white px-3 py-2 rounded-md"
+            >
+              Devoluciones
+            </a>
           <form action="/logout" method="post">
             <button
               type="submit"
               className="w-full text-left text-gray-300 hover:text-white hover:bg-red-600 px-3 py-2 rounded-md"
             >
-              Logout
+              Cerrar Sesión
             </button>
           </form>
         </div>
